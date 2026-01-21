@@ -1,0 +1,18 @@
+# Copy this file to terraform.tfvars and customize values
+
+aws_region         = "us-west-2"
+vpc_cidr           = "10.0.0.0/16"
+public_subnet_cidr = "10.0.1.0/24"
+availability_zone  = "us-west-2a"
+
+instance_type = "t3.micro"
+instance_name = "sre-test-instance"
+
+# SSH key pair name (must exist in AWS)
+# key_name = "my-key-pair"
+
+# CIDR blocks allowed to SSH (e.g., your IP)
+# allowed_ssh_cidrs = ["203.0.113.0/32"]
+
+# Custom AMI ID (leave empty to use latest Amazon Linux 2023)
+# ami_id = "ami-xxxxxxxxxxxxxxxxx"
