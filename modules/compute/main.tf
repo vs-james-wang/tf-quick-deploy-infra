@@ -60,6 +60,7 @@ resource "aws_autoscaling_group" "main" {
   min_size            = var.asg_min_size
   max_size            = var.asg_max_size
   desired_capacity    = var.asg_desired_capacity
+  force_delete        = true
 
   launch_template {
     id      = aws_launch_template.main.id
@@ -73,8 +74,20 @@ resource "aws_autoscaling_group" "main" {
   }
 
   tag {
-    key                 = "Schedule"
-    value               = "test"
+    key                 = "lights-out:managed"
+    value               = "true"
     propagate_at_launch = false
   }
+
+  tag {
+    key                 = "lights-out:group"
+    value               = "sre-test"
+    propagate_at_launch = false
+  }
+
+  tag {
+    key                 = "Scheduler"
+    value               = "offhours"
+    propagate_at_launch = false
+  }  
 }

@@ -51,8 +51,6 @@ module "ecs" {
   ecs_task_memory             = var.ecs_task_memory
   ecs_container_image         = var.ecs_container_image
   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
-
-  depends_on = [module.compute]
 }
 
 # Compute Module

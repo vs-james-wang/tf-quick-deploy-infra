@@ -66,6 +66,8 @@ resource "aws_db_instance" "main" {
 
   tags = {
     Name     = "${var.project_name}-db"
-    Schedule = "test"
+    "lights-out:managed" = "true"
+    "lights-out:group" = "sre-test"
+    "Scheduler" = "offhours"
   }
 }

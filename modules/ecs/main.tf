@@ -82,9 +82,12 @@ resource "aws_ecs_service" "main" {
     base              = 0
   }
 
-  depends_on = [aws_ecs_cluster_capacity_providers.main]
+  depends_on = [aws_ecs_cluster_capacity_providers.main, aws_ecs_cluster.main]
 
   tags = {
     Name = "${var.project_name}-service"
+    "lights-out:managed" = "true"
+    "lights-out:group" = "sre-test"
+    "Scheduler" = "offhours"
   }
 }
