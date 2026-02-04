@@ -60,3 +60,24 @@ output "rds_database_name" {
   description = "Name of the database"
   value       = module.rds.rds_database_name
 }
+
+# Aurora Outputs
+output "aurora_cluster_endpoint" {
+  description = "Aurora cluster writer endpoint"
+  value       = module.aurora.cluster_endpoint
+}
+
+output "aurora_cluster_reader_endpoint" {
+  description = "Aurora cluster reader endpoint"
+  value       = module.aurora.cluster_reader_endpoint
+}
+
+output "aurora_database_name" {
+  description = "Aurora database name"
+  value       = module.aurora.database_name
+}
+
+output "aurora_port" {
+  description = "Aurora database port"
+  value       = module.aurora.port
+}

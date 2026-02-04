@@ -16,3 +16,15 @@ instance_name = "sre-test-instance"
 
 # Custom AMI ID (leave empty to use latest Amazon Linux 2023)
 # ami_id = "ami-xxxxxxxxxxxxxxxxx"
+
+# Aurora Serverless v2 Configuration (minimum resources for lab/testing)
+# aurora_engine         = "aurora-postgresql"  # or "aurora-mysql"
+# aurora_engine_version = "15.8"               # PostgreSQL 15.8
+# aurora_database_name  = "appdb"
+# aurora_master_username = "postgres"
+# aurora_min_capacity   = 0.5                  # Minimum ACU (0.5 is lowest)
+# aurora_max_capacity   = 1                    # Maximum ACU for cost control
+# aurora_publicly_accessible = true
+
+# Aurora password (use TF_VAR_aurora_master_password env var, or falls back to db_password)
+# export TF_VAR_aurora_master_password="your-secure-password"
