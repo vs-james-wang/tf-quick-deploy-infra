@@ -2,6 +2,40 @@
 
 Modular Terraform project for spinning up ECS on EC2 with RDS PostgreSQL. All configuration is driven from `terraform.tfvars`.
 
+## Quick Start
+
+### Prerequisites
+- Terraform >= 1.0
+- AWS CLI configured with credentials
+- An SSH key pair created in your target AWS region
+
+### Steps
+
+```bash
+# 1. Clone and init
+git clone <repo-url> && cd <tf-quick-deploy-infra>
+terraform init
+
+# 2. Edit terraform.tfvars — update these at minimum:
+#    - key_name           → your AWS SSH key pair name
+#    - allowed_ssh_cidrs  → your IP (e.g. ["1.2.3.4/32"])
+#    - db_password        → or set via: export TF_VAR_db_password="yourpassword"
+
+# 3. Create resources (in order to avoid dependency issues)
+terraform apply -target=module.vpc -target=module.security -target=module.iam
+terraform apply -target=module.compute
+terraform apply -target=module.ecs
+terraform apply -target=module.rds
+
+# 4. Verify
+terraform output
+
+# 5. Tear down (in order to avoid stuck destroys)
+terraform destroy -target=module.ecs
+terraform destroy -target=module.compute
+terraform destroy
+```
+
 ## Project Structure
 
 ```
