@@ -174,4 +174,55 @@ variable "db_password" {
   description = "Master password for the database"
   type        = string
   sensitive   = true
+  default     = "LabPassword123!"  # Default for lab/testing only - change in production
+}
+
+# Aurora Variables
+variable "aurora_engine" {
+  description = "Aurora engine type (aurora-postgresql or aurora-mysql)"
+  type        = string
+  default     = "aurora-postgresql"
+}
+
+variable "aurora_engine_version" {
+  description = "Aurora engine version"
+  type        = string
+  default     = "15.8"
+}
+
+variable "aurora_database_name" {
+  description = "Name of the default Aurora database"
+  type        = string
+  default     = "appdb"
+}
+
+variable "aurora_master_username" {
+  description = "Master username for Aurora"
+  type        = string
+  default     = "postgres"
+}
+
+variable "aurora_master_password" {
+  description = "Master password for Aurora"
+  type        = string
+  sensitive   = true
+  default     = null
+}
+
+variable "aurora_min_capacity" {
+  description = "Minimum ACU for Aurora Serverless v2 (0.5 is minimum)"
+  type        = number
+  default     = 0.5
+}
+
+variable "aurora_max_capacity" {
+  description = "Maximum ACU for Aurora Serverless v2"
+  type        = number
+  default     = 1
+}
+
+variable "aurora_publicly_accessible" {
+  description = "Whether the Aurora instance is publicly accessible"
+  type        = bool
+  default     = true
 }

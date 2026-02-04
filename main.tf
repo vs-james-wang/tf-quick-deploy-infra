@@ -51,8 +51,8 @@ module "ecs" {
   ecs_task_memory             = var.ecs_task_memory
   ecs_container_image         = var.ecs_container_image
   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
-  ecs_desired_count          = var.ecs_desired_count
-  ecs_container_port         = var.ecs_container_port
+  ecs_desired_count           = var.ecs_desired_count
+  ecs_container_port          = var.ecs_container_port
 }
 
 # Compute Module
@@ -89,6 +89,25 @@ module "rds" {
   db_engine_version          = var.db_engine_version
   db_allocated_storage       = var.db_allocated_storage
   db_publicly_accessible     = var.db_publicly_accessible
+}
+
+# Aurora Module (Serverless v2 - minimum resources for lab/testing)
+module "aurora" {
+  source = "./modules/aurora"
+
+  project_name               = var.project_name
+  vpc_id                     = module.vpc.vpc_id
+  subnet_ids                 = [module.vpc.public_subnet_id, module.vpc.public_subnet_2_id]
+  instance_security_group_id = module.security.instance_security_group_id
+  allowed_cidrs              = var.allowed_ssh_cidrs
+  engine                     = var.aurora_engine
+  engine_version             = var.aurora_engine_version
+  database_name              = var.aurora_database_name
+  master_username            = var.aurora_master_username
+  master_password            = coalesce(var.aurora_master_password, var.db_password)
+  serverless_min_capacity    = var.aurora_min_capacity
+  serverless_max_capacity    = var.aurora_max_capacity
+  publicly_accessible        = var.aurora_publicly_accessible
 }
 
 

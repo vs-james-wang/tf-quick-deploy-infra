@@ -89,5 +89,5 @@ resource "aws_autoscaling_group" "main" {
     key                 = "Scheduler"
     value               = "offhours"
     propagate_at_launch = false
-  }  
+  }
 }

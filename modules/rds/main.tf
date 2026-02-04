@@ -65,9 +65,9 @@ resource "aws_db_instance" "main" {
   skip_final_snapshot    = true
 
   tags = {
-    Name     = "${var.project_name}-db"
+    Name                 = "${var.project_name}-db"
     "lights-out:managed" = "true"
-    "lights-out:group" = "sre-test"
-    "Scheduler" = "offhours"
+    "lights-out:group"   = "sre-test"
+    "Scheduler"          = "offhours"
   }
 }

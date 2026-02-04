@@ -51,7 +51,8 @@ terraform destroy
     ├── iam/                   # IAM roles and instance profiles
     ├── compute/               # Launch template and Auto Scaling Group
     ├── ecs/                   # ECS cluster, service, task definition
-    └── rds/                   # RDS PostgreSQL instance and security group
+    ├── rds/                   # RDS PostgreSQL instance and security group
+    └── aurora/                # Aurora Serverless v2 cluster (PostgreSQL/MySQL)
 ```
 
 ## Modules
@@ -81,6 +82,12 @@ terraform destroy
 - DB subnet group and RDS-specific security group
 - PostgreSQL instance with configurable engine version, storage, and accessibility
 
+### Aurora (`modules/aurora`)
+- Aurora Serverless v2 cluster (PostgreSQL or MySQL)
+- Minimum resource configuration: 0.5-1 ACU (ideal for lab/testing)
+- DB subnet group and Aurora-specific security group
+- Single writer instance with auto-scaling capacity
+
 ## Configuration
 
 All values are configured in `terraform.tfvars`:
@@ -107,6 +114,11 @@ All values are configured in `terraform.tfvars`:
 | `db_allocated_storage` | RDS storage in GB | `20` |
 | `db_publicly_accessible` | RDS public access | `true` |
 | `db_password` | Database password (use `TF_VAR_db_password` env var instead) | - |
+| `aurora_engine` | Aurora engine (`aurora-postgresql` or `aurora-mysql`) | `aurora-postgresql` |
+| `aurora_engine_version` | Aurora engine version | `15.4` |
+| `aurora_min_capacity` | Minimum ACU for Serverless v2 | `0.5` |
+| `aurora_max_capacity` | Maximum ACU for Serverless v2 | `1` |
+| `aurora_master_password` | Aurora password (falls back to `db_password` if not set) | - |
 
 ## Usage
 

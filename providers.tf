@@ -9,10 +9,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "sre-spin-up-test-resources"
-    key            = "terraform.tfstate"
-    region         = "us-west-2"
-    encrypt        = true
+    bucket  = "sre-spin-up-test-resources"
+    key     = "terraform.tfstate"
+    region  = "us-west-2"
+    encrypt = true
   }
 }
 
