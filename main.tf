@@ -22,7 +22,7 @@ module "vpc" {
   public_subnet_cidr = var.public_subnet_cidr
   availability_zone  = var.availability_zone
   aws_region         = var.aws_region
-  project_name       = "sre-test"
+  project_name       = var.project_name
 }
 
 # Security Module
@@ -31,40 +31,43 @@ module "security" {
 
   vpc_id            = module.vpc.vpc_id
   allowed_ssh_cidrs = var.allowed_ssh_cidrs
-  project_name      = "sre-test"
+  project_name      = var.project_name
 }
 
 # IAM Module
 module "iam" {
   source = "./modules/iam"
 
-  project_name = "sre-test"
+  project_name = var.project_name
 }
 
 # ECS Module (must be created before compute to get cluster name)
 module "ecs" {
   source = "./modules/ecs"
 
-  project_name                = "sre-test"
+  project_name                = var.project_name
   asg_arn                     = module.compute.asg_arn
   ecs_task_cpu                = var.ecs_task_cpu
   ecs_task_memory             = var.ecs_task_memory
   ecs_container_image         = var.ecs_container_image
   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
+  ecs_desired_count          = var.ecs_desired_count
+  ecs_container_port         = var.ecs_container_port
 }
 
 # Compute Module
 module "compute" {
   source = "./modules/compute"
 
-  project_name              = "sre-test"
+  project_name              = var.project_name
   instance_type             = var.instance_type
   instance_name             = var.instance_name
   key_name                  = var.key_name
   subnet_id                 = module.vpc.public_subnet_id
   security_group_id         = module.security.instance_security_group_id
   iam_instance_profile_name = module.iam.ecs_instance_profile_name
-  ecs_cluster_name          = "sre-test-cluster"
+  ecs_cluster_name          = "${var.project_name}-cluster"
+  ebs_volume_size           = var.ebs_volume_size
   asg_min_size              = var.asg_min_size
   asg_max_size              = var.asg_max_size
   asg_desired_capacity      = var.asg_desired_capacity
@@ -83,6 +86,9 @@ module "rds" {
   db_name                    = var.db_name
   db_username                = var.db_username
   db_password                = var.db_password
+  db_engine_version          = var.db_engine_version
+  db_allocated_storage       = var.db_allocated_storage
+  db_publicly_accessible     = var.db_publicly_accessible
 }
 
 

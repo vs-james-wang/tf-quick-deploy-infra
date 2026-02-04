@@ -45,8 +45,6 @@ resource "aws_ecs_task_definition" "main" {
   family                   = "${var.project_name}-task"
   network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
-  cpu                      = var.ecs_task_cpu
-  memory                   = var.ecs_task_memory
   execution_role_arn       = var.ecs_task_execution_role_arn
 
   container_definitions = jsonencode([{
@@ -56,8 +54,8 @@ resource "aws_ecs_task_definition" "main" {
     memory    = var.ecs_task_memory
     essential = true
     portMappings = [{
-      containerPort = 80
-      hostPort      = 80
+      containerPort = var.ecs_container_port
+      hostPort      = var.ecs_container_port
       protocol      = "tcp"
     }]
   }])
@@ -72,7 +70,7 @@ resource "aws_ecs_service" "main" {
   name            = "${var.project_name}-service"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.main.arn
-  desired_count   = 1
+  desired_count   = var.ecs_desired_count
 
   deployment_minimum_healthy_percent = 0
 

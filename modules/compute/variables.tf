@@ -39,6 +39,12 @@ variable "ecs_cluster_name" {
   type        = string
 }
 
+variable "ebs_volume_size" {
+  description = "EBS volume size in GB"
+  type        = number
+  default     = 50
+}
+
 variable "asg_min_size" {
   description = "Minimum size of ASG"
   type        = number

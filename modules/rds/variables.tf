@@ -25,6 +25,24 @@ variable "allowed_ssh_cidrs" {
   default     = []
 }
 
+variable "db_engine_version" {
+  description = "PostgreSQL engine version"
+  type        = string
+  default     = "15"
+}
+
+variable "db_allocated_storage" {
+  description = "Allocated storage for RDS in GB"
+  type        = number
+  default     = 20
+}
+
+variable "db_publicly_accessible" {
+  description = "Whether the RDS instance is publicly accessible"
+  type        = bool
+  default     = true
+}
+
 variable "db_instance_class" {
   description = "RDS instance class"
   type        = string

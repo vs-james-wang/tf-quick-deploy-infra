@@ -1,3 +1,9 @@
+variable "project_name" {
+  description = "Project name used for resource naming across all modules"
+  type        = string
+  default     = "sre-test"
+}
+
 variable "aws_region" {
   description = "AWS region to deploy resources"
   type        = string
@@ -108,7 +114,44 @@ variable "ecs_task_memory" {
   default     = 512
 }
 
+variable "ecs_desired_count" {
+  description = "Desired number of ECS tasks"
+  type        = number
+  default     = 1
+}
+
+variable "ecs_container_port" {
+  description = "Container port for ECS task"
+  type        = number
+  default     = 80
+}
+
+# Compute Variables
+variable "ebs_volume_size" {
+  description = "EBS volume size in GB for EC2 instances"
+  type        = number
+  default     = 50
+}
+
 # RDS Variables
+variable "db_engine_version" {
+  description = "PostgreSQL engine version"
+  type        = string
+  default     = "15"
+}
+
+variable "db_allocated_storage" {
+  description = "Allocated storage for RDS in GB"
+  type        = number
+  default     = 20
+}
+
+variable "db_publicly_accessible" {
+  description = "Whether the RDS instance is publicly accessible"
+  type        = bool
+  default     = true
+}
+
 variable "db_instance_class" {
   description = "RDS instance class"
   type        = string

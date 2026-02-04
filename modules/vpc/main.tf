@@ -36,7 +36,7 @@ resource "aws_subnet" "public" {
 # Public Subnet 2 (for RDS subnet group)
 resource "aws_subnet" "public_2" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.2.0/24"
+  cidr_block              = cidrsubnet(var.vpc_cidr, 8, 2)
   availability_zone       = "${var.aws_region}b"
   map_public_ip_on_launch = true
 
